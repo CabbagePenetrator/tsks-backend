@@ -39,11 +39,19 @@ class FortifyServiceProvider extends ServiceProvider
         RateLimiter::for('login', function (Request $request) {
             $email = (string) $request->email;
 
-            return Limit::perMinute(5)->by($email.$request->ip());
+            return Limit::perMinute(5)->by($email . $request->ip());
         });
 
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
+        });
+
+        Fortify::requestPasswordResetLinkView(function () {
+            return config('front_end_url') . '/forgot-password';
+        });
+
+        Fortify::resetPasswordView(function ($request) {
+            return config('front_end_url') . '/reset-password?token=' . $request->token;
         });
     }
 }
