@@ -40,7 +40,7 @@ class CollectionController extends Controller
     public function show(Collection $collection)
     {
         return response()->json([
-            'collection' => $collection,
+            'collection' => $collection->loadCount('tasks'),
         ]);
     }
 

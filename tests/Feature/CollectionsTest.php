@@ -38,7 +38,12 @@ class CollectionsTest extends TestCase
         $this->get(route('collections.show', $collection))
             ->assertOk()
             ->assertJson([
-                'collection' => $collection->toArray(),
+                'collection' => [
+                    'title' => $collection->title,
+                    'color' => $collection->color,
+                    'icon' => $collection->icon,
+                    'tasks_count' => $collection->tasks()->count(),
+                ],
             ]);
     }
 
