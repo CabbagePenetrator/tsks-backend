@@ -52,14 +52,14 @@ class CollectionsTest extends TestCase
         $this
             ->actingAs($user)
             ->post(route('collections.store'), [
-                'name' => 'A new collection',
+                'title' => 'A new collection',
                 'icon' => $icon,
                 'color' => '#CC5F88',
             ])
             ->assertCreated()
             ->assertJson([
                 'collection' => [
-                    'name' => 'A new collection',
+                    'title' => 'A new collection',
                     'icon' => "icons/{$icon->hashName()}",
                     'color' => '#CC5F88',
                 ]
@@ -69,7 +69,7 @@ class CollectionsTest extends TestCase
 
         $this->assertDatabaseHas(Collection::class, [
             'user_id' => $user->id,
-            'name' => 'A new collection',
+            'title' => 'A new collection',
             'icon' => "icons/{$icon->hashName()}",
             'color' => '#CC5F88',
         ]);
@@ -93,8 +93,7 @@ class CollectionsTest extends TestCase
         Storage::assertExists("icons/{$icon->hashName()}");
 
         $this->assertDatabaseHas(Collection::class, [
-            'user_id' => $user->id,
-            'name' => $new->name,
+            'title' => $new->title,
             'color' => $new->color,
             'icon' => "icons/{$icon->hashName()}",
         ]);

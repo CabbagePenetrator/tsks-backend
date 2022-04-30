@@ -19,7 +19,7 @@ class CollectionFactory extends Factory
     {
         return [
             'user_id' => User::factory()->create()->id,
-            'name' => $this->faker->word(),
+            'title' => $this->faker->word(),
             'icon' => $this->faker->imageUrl(),
             'color' => $this->faker->colorName(),
         ];

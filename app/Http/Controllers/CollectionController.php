@@ -19,7 +19,7 @@ class CollectionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255'],
             'icon' => ['required', 'image'],
             'color' => ['required', 'string'],
         ]);
@@ -27,7 +27,7 @@ class CollectionController extends Controller
         $icon = Storage::put('icons', $request->file('icon'));
 
         $collection = $request->user()->collections()->create([
-            'name' => $request->name,
+            'title' => $request->title,
             'icon' => $icon,
             'color' => $request->color,
         ]);
@@ -47,14 +47,14 @@ class CollectionController extends Controller
     public function update(Request $request, Collection $collection)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255'],
             'icon' => ['nullable', 'image'],
             'color' => ['required', 'string'],
         ]);
 
         $collection->fill(
             $request->only(
-                'name',
+                'title',
                 'color'
             )
         );
