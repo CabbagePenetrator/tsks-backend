@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 
 class CollectionController extends Controller
@@ -12,7 +13,6 @@ class CollectionController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'completed' => ['required', 'boolean'],
             'icon' => ['required', 'image'],
             'color' => ['required', 'string'],
         ]);
@@ -21,14 +21,13 @@ class CollectionController extends Controller
 
         $collection = Collection::create([
             'name' => $request->name,
-            'completed' => $request->completed,
             'icon' => $icon,
             'color' => $request->color,
         ]);
 
         return response()->json([
             'collection' => $collection,
-        ], 201);
+        ], Response::HTTP_CREATED);
     }
 
     public function show(Collection $collection)
@@ -42,7 +41,6 @@ class CollectionController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'completed' => ['required', 'boolean'],
             'icon' => ['nullable', 'image'],
             'color' => ['required', 'string'],
         ]);
@@ -50,7 +48,6 @@ class CollectionController extends Controller
         $collection->fill(
             $request->only(
                 'name',
-                'completed',
                 'color'
             )
         );

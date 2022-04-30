@@ -18,7 +18,6 @@ class CollectionFactory extends Factory
     {
         return [
             'name' => $this->faker->word(),
-            'completed' => $this->faker->boolean(),
             'icon' => $this->faker->imageUrl(),
             'color' => $this->faker->colorName(),
         ];

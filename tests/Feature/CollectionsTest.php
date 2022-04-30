@@ -32,15 +32,13 @@ class CollectionsTest extends TestCase
         $this
             ->post(route('collections.store'), [
                 'name' => 'A new collection',
-                'completed' => true,
                 'icon' => $icon,
                 'color' => '#CC5F88',
             ])
-            ->assertStatus(201)
+            ->assertCreated()
             ->assertJson([
                 'collection' => [
                     'name' => 'A new collection',
-                    'completed' => true,
                     'icon' => "icons/{$icon->hashName()}",
                     'color' => '#CC5F88',
                 ]
@@ -50,7 +48,6 @@ class CollectionsTest extends TestCase
 
         $this->assertDatabaseHas(Collection::class, [
             'name' => 'A new collection',
-            'completed' => true,
             'icon' => "icons/{$icon->hashName()}",
             'color' => '#CC5F88',
         ]);
@@ -76,8 +73,8 @@ class CollectionsTest extends TestCase
 
         $this->assertDatabaseHas(Collection::class, [
             'name' => $new->name,
-            'completed' => $new->completed,
             'color' => $new->color,
+            'icon' => "icons/{$icon->hashName()}",
         ]);
     }
 

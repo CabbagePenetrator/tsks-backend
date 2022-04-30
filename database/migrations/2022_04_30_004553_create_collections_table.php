@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('collections', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->boolean('completed');
             $table->string('icon');
             $table->string('color');
             $table->timestamps();
