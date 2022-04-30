@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CollectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,15 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/collections', [CollectionController::class, 'store'])
+    ->name('collections.store');
+
+Route::get('/collections/{collection}', [CollectionController::class, 'show'])
+    ->name('collections.show');
+
+Route::put('/collections/{collection}', [CollectionController::class, 'update'])
+    ->name('collections.update');
+
+Route::delete('/collections/{collection}', [CollectionController::class, 'destroy'])
+    ->name('collections.destroy');
