@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\CollectionTasksController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,15 @@ Route::put('/collections/{collection}', [CollectionController::class, 'update'])
 
 Route::delete('/collections/{collection}', [CollectionController::class, 'destroy'])
     ->name('collections.destroy');
+
+Route::post('/collections/{collection}/tasks', [CollectionTasksController::class, 'store'])
+    ->name('collections.tasks.store');
+
+Route::get('/collections/{collection}/tasks/{task}', [CollectionTasksController::class, 'show'])
+    ->name('collections.tasks.show');
+
+Route::put('/collections/{collection}/tasks/{task}', [CollectionTasksController::class, 'update'])
+    ->name('collections.tasks.update');
+
+Route::delete('/collections/{collection}/tasks/{task}', [CollectionTasksController::class, 'destroy'])
+    ->name('collections.tasks.destroy');
