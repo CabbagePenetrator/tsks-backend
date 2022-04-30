@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Storage;
 
 class CollectionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         return response()->json([
-            'collections' => Collection::all(),
+            'collections' => $request->user()->collections,
         ]);
     }
 
@@ -26,7 +26,7 @@ class CollectionController extends Controller
 
         $icon = Storage::put('icons', $request->file('icon'));
 
-        $collection = Collection::create([
+        $collection = $request->user()->collections()->create([
             'name' => $request->name,
             'icon' => $icon,
             'color' => $request->color,
