@@ -12,6 +12,21 @@ class CollectionTasksTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_tasks_can_be_viewed()
+    {
+        $collection = Collection::factory()->create();
+
+        $tasks = Task::factory()->count(3)->create([
+            'collection_id' => $collection->id,
+        ]);
+
+        $this->get(route('collections.tasks', $collection))
+            ->assertOk()
+            ->assertJson([
+                'tasks' => $tasks->toArray(),
+            ]);
+    }
+
     public function test_a_task_can_be_viewed()
     {
         $task = Task::factory()->create();

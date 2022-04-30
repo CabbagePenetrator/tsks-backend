@@ -9,6 +9,13 @@ use Illuminate\Http\Response;
 
 class CollectionTasksController extends Controller
 {
+    public function index(Collection $collection)
+    {
+        return response()->json([
+            'tasks' => $collection->tasks,
+        ]);
+    }
+
     public function store(Request $request, Collection $collection)
     {
         $request->validate([

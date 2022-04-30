@@ -20,6 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/collections', [CollectionController::class, 'index'])
+    ->name('collections');
+
 Route::post('/collections', [CollectionController::class, 'store'])
     ->name('collections.store');
 
@@ -31,6 +34,9 @@ Route::put('/collections/{collection}', [CollectionController::class, 'update'])
 
 Route::delete('/collections/{collection}', [CollectionController::class, 'destroy'])
     ->name('collections.destroy');
+
+Route::get('/collections/{collection}/tasks', [CollectionTasksController::class, 'index'])
+    ->name('collections.tasks');
 
 Route::post('/collections/{collection}/tasks', [CollectionTasksController::class, 'store'])
     ->name('collections.tasks.store');

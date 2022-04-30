@@ -12,6 +12,17 @@ class CollectionsTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_all_collections_can_be_viewed()
+    {
+        $collections = Collection::factory()->count(3)->create();
+
+        $this->get(route('collections'))
+            ->assertOk()
+            ->assertJson([
+                'collections' => $collections->toArray(),
+            ]);
+    }
+
     public function test_a_collection_can_be_viewed()
     {
         $collection = Collection::factory()->create();

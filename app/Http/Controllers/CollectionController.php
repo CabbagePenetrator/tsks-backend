@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\Storage;
 
 class CollectionController extends Controller
 {
+    public function index()
+    {
+        return response()->json([
+            'collections' => Collection::all(),
+        ]);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
