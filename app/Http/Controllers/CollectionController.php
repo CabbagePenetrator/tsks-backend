@@ -13,7 +13,7 @@ class CollectionController extends Controller
     {
         return response()->json([
             'collections' => $request->user()->collections()
-                ->with('tasks:collection_id,completed')
+                ->with('tasks:collection_id,title,completed,due_date')
                 ->get(),
         ]);
     }
