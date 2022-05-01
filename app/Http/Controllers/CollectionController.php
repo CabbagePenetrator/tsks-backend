@@ -13,7 +13,9 @@ class CollectionController extends Controller
     {
         return response()->json([
             'collections' => $request->user()->collections()
-                ->with('tasks:id,collection_id,title,completed,due_date')
+                ->with(['tasks' => function ($query) {
+                    $query->where('completed', false);
+                }])
                 ->get(),
         ]);
     }
