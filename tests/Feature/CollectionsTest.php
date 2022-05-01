@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\Collection;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -38,12 +39,7 @@ class CollectionsTest extends TestCase
         $this->get(route('collections.show', $collection))
             ->assertOk()
             ->assertJson([
-                'collection' => [
-                    'title' => $collection->title,
-                    'color' => $collection->color,
-                    'icon' => $collection->icon,
-                    'tasks_count' => $collection->tasks()->count(),
-                ],
+                'collection' => $collection->toArray(),
             ]);
     }
 
@@ -114,5 +110,29 @@ class CollectionsTest extends TestCase
         $this->assertDatabaseMissing(Collection::class, [
             'id' => $collection->id,
         ]);
+    }
+
+    public function test_collections_include_tasks()
+    {
+        $user = User::factory()->create();
+
+        $collection = Collection::factory()->create([
+            'user_id' => $user->id,
+        ]);
+
+        $tasks = Task::factory()->count(2)->create([
+            'collection_id' => $collection->id,
+        ]);
+
+        $this->actingAs($user)
+            ->get(route('collections'))
+            ->assertOk()
+            ->assertJsonStructure([
+                'collections' => [
+                    '*' => [
+                        'tasks',
+                    ]
+                ]
+            ]);
     }
 }

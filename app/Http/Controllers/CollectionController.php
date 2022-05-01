@@ -12,7 +12,9 @@ class CollectionController extends Controller
     public function index(Request $request)
     {
         return response()->json([
-            'collections' => $request->user()->collections,
+            'collections' => $request->user()->collections()
+                ->with('tasks:collection_id,completed')
+                ->get(),
         ]);
     }
 
@@ -40,7 +42,7 @@ class CollectionController extends Controller
     public function show(Collection $collection)
     {
         return response()->json([
-            'collection' => $collection->loadCount('tasks'),
+            'collection' => $collection,
         ]);
     }
 
