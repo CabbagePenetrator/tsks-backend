@@ -10,6 +10,10 @@ class Task extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'completed' => 'boolean',
+    ];
+
     public function collection(): BelongsTo
     {
         return $this->belongsTo(Collection::class);
