@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\CompletedTaskController;
 use App\Http\Controllers\CollectionTasksController;
 
 /*
@@ -49,3 +50,9 @@ Route::put('/collections/{collection}/tasks/{task}', [CollectionTasksController:
 
 Route::delete('/collections/{collection}/tasks/{task}', [CollectionTasksController::class, 'destroy'])
     ->name('collections.tasks.destroy');
+
+Route::put('/tasks/{task}/complete', [CompletedTaskController::class, 'update'])
+    ->name('tasks.complete');
+
+Route::delete('/tasks/{task}/uncomplete', [CompletedTaskController::class, 'destroy'])
+    ->name('tasks.uncomplete');

@@ -80,4 +80,34 @@ class CollectionTasksTest extends TestCase
             'id' => $task->id,
         ]);
     }
+
+    public function test_a_task_can_be_completed()
+    {
+        $task = Task::factory()->create([
+            'completed' => false,
+        ]);
+
+        $this->put(route('tasks.complete', $task))
+            ->assertNoContent();
+
+        $this->assertDatabaseHas(Task::class, [
+            'id' => $task->id,
+            'completed' => true,
+        ]);
+    }
+
+    public function test_a_task_can_be_uncompleted()
+    {
+        $task = Task::factory()->create([
+            'completed' => true,
+        ]);
+
+        $this->delete(route('tasks.uncomplete', $task))
+            ->assertNoContent();
+
+        $this->assertDatabaseHas(Task::class, [
+            'id' => $task->id,
+            'completed' => false,
+        ]);
+    }
 }
